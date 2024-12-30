@@ -1,0 +1,16 @@
+trigger: none
+
+pr:
+  - live
+
+variables:
+  - group: AWS-Lambda-deploy-variables
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: ZooportsTheFootball/lambda-pipeline-template
+
+steps:
+  - template: lambda-production-and-live-versioning-template.yaml@templates

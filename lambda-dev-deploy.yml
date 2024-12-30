@@ -1,0 +1,63 @@
+trigger:
+  - dev
+
+variables:
+  - group: AWS-Lambda-deploy-variables
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: ZooportsTheFootball/lambda-pipeline-template
+
+# 빌드 파이프라인 참조와 지역은 파이프라인별로 수동 설정
+stages:
+- stage: Build
+  jobs: 
+  - job: build_lambda
+    steps:
+    - template: lambda-dev-build-template.yaml@templates
+
+- stage: Deploy
+  jobs:
+  - job: deploy_ap_northeast_2
+    steps:
+    - template: lambda-dev-deploy-template.yaml@templates
+      parameters:
+        region: 'ap-northeast-2'
+  - job: deploy_us_west_2
+    steps:
+    - template: lambda-dev-deploy-template.yaml@templates
+      parameters:
+        region: 'us-west-2'
+  - job: deploy_us_east_1
+    steps:
+    - template: lambda-dev-deploy-template.yaml@templates
+      parameters:
+        region: 'us-east-1'
+
+- stage: Versioning
+  dependsOn: Deploy
+  jobs:
+  - job: versioning
+    variables:
+      ap_northeast_2_version: $[ stageDependencies.Deploy.deploy_ap_northeast_2.outputs['deploy.publishedVersion'] ]
+      us_west_2_version: $[ stageDependencies.Deploy.deploy_us_west_2.outputs['deploy.publishedVersion'] ]
+      us_east_1_version: $[ stageDependencies.Deploy.deploy_us_east_1.outputs['deploy.publishedVersion'] ]
+      ap_northeast_2_lambda_function_name: $[ stageDependencies.Deploy.deploy_ap_northeast_2.outputs['deploy.lambdaFunctionName'] ]
+      us_west_2_lambda_function_name: $[ stageDependencies.Deploy.deploy_us_west_2.outputs['deploy.lambdaFunctionName'] ]
+      us_east_1_lambda_function_name: $[ stageDependencies.Deploy.deploy_us_east_1.outputs['deploy.lambdaFunctionName'] ]
+    steps:
+    - template: lambda-dev-versioning-template.yaml@templates
+      parameters:
+        lambdaConfig:
+          lambdaList:
+            - region: 'ap-northeast-2'
+              functionName: $(ap_northeast_2_lambda_function_name)
+              version: $(ap_northeast_2_version)
+            - region: 'us-west-2'
+              functionName: $(us_west_2_lambda_function_name)
+              version: $(us_west_2_version)
+            - region: 'us-east-1'
+              functionName: $(us_east_1_lambda_function_name)
+              version: $(us_east_1_version)

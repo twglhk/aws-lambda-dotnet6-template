@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "lmw/s3YSK/HV1ZAA1VcYWw8YEHDQg4Ory9w1tCkIG3NWPOs7WHLjIaETVxufIO8kepsFg9f/Au9wN00vORvPaQ==",
+  "success": true,
+  "projectFilePath": "/Users/sinjongha/wkspaces/backend-aws-lambda-dotnet6-template/src/LAMBDA_NAME/ASSEMBLY_NAME.csproj",
+  "expectedPackageFiles": [
+    "/Users/sinjongha/.nuget/packages/amazon.lambda.apigatewayevents/2.6.0/amazon.lambda.apigatewayevents.2.6.0.nupkg.sha512",
+    "/Users/sinjongha/.nuget/packages/amazon.lambda.core/2.1.0/amazon.lambda.core.2.1.0.nupkg.sha512",
+    "/Users/sinjongha/.nuget/packages/amazon.lambda.serialization.systemtextjson/2.2.0/amazon.lambda.serialization.systemtextjson.2.2.0.nupkg.sha512",
+    "/Users/sinjongha/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/Users/sinjongha/.nuget/packages/microsoft.netcore.app.ref/6.0.25/microsoft.netcore.app.ref.6.0.25.nupkg.sha512",
+    "/Users/sinjongha/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.25/microsoft.aspnetcore.app.ref.6.0.25.nupkg.sha512",
+    "/Users/sinjongha/.nuget/packages/microsoft.netcore.app.crossgen2.osx-arm64/6.0.25/microsoft.netcore.app.crossgen2.osx-arm64.6.0.25.nupkg.sha512"
+  ],
+  "logs": []
+}

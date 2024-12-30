@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Parameters:
+  CodeUriPath:
+    Description: The path for the Lambda function code.
+    Type: String
+    Default: ./src/LAMBDA_NAME/
+     # ! 이 부분의 'LAMBDA_NAME'과 프로젝트 '디렉토리 이름'을 적절한 Lambda 함수 이름으로 변경
+
+  LambdaHandler:
+    Description: The handler for the Lambda function.
+    Type: String
+    Default: ASSEMBLY_NAME::WardGames.Zooports.Lambda.LAMBDA_NAME.Function::FunctionHandler 
+    # ! 'ASSEMBLY_NAME'과 csproj 파일명을 적절한 네임으로 변경
+    # ! 이 Handler 부분의 'LAMBDA_NAME' 값을 Lambda 프로젝트 이름으로 변경.
+    # ! Function.cs의 namespace 이름도 'LAMBDA_NAME'과 같이 변경
+
+  LambdaRole:
+    Description: The IAM role for the Lambda function.
+    Type: String
+    Default: ROLE 
+    # ! ROLE을 사용하는 Lambda 프로젝트의 IAM 역할 이름으로 변경
+    # ROLE은 AWS console에서 IAM 대시보드를 통해 생성해야 함.
+
+Resources:
+  LAMBDA_NAME: # ! 위쪽에 기재한 LAMBDA_NAME과 동일하게 변경
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: !Ref CodeUriPath
+      Handler: !Ref LambdaHandler
+      Runtime: dotnet6
+      Architectures:
+        - x86_64
+      MemorySize: 256
+      Timeout: 30
+      Role: !Ref LambdaRole
+
+Outputs:
+  LambdaFunctionName:
+    Description: "The name of the deployed Lambda function"
+    Value: !Ref LAMBDA_NAME

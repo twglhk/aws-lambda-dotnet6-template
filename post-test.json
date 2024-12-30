@@ -1,0 +1,4 @@
+{
+    "body": "{\"Data\" : {\"Data1\": \"data1\", \"data2\": \"data2\"}}",
+    "httpMethod": "POST"
+}
